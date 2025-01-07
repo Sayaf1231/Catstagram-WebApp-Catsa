@@ -28,9 +28,12 @@ body {
     position: fixed; /* Sticks the logo to the top-left corner */
     top: 20px;
     left: 20px;
-    width: 250px; /* Adjust size */
+    width: 100px;
     height: auto;
+    max-width: 100px; /* Ensure consistent size */
+    min-width: 80px;
 }
+
 
 .form {
     padding: 20px;

@@ -17,3 +17,7 @@ in our case it is helpful because we want to only change one pair and copy the r
 
 For likes we are gonna use event delegation by using event bubbling; which is something like 
 attach to a parent container and use event bubling to detec clicks on like
+
+
+The ...doc.data() part expands all the data fields from the original document (doc.data()) into the new object. 
+This creates a new object with the document ID and all its data fields.

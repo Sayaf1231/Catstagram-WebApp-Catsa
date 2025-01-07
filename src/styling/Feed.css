@@ -2,14 +2,51 @@
     padding: 20px;
     background-color: #eed4b2;
     text-align: center;
+    overflow-y: auto; /* Make the page scrollable */
+    height: 100vh; /* Ensure it uses the full viewport height */
+    position: relative;
 }
 
 .logo {
     position: fixed; /* Sticks the logo to the top-left corner */
     top: 20px;
     left: 20px;
-    width: 250px; /* Adjust size */
+    width: 100px;
     height: auto;
+    max-width: 100px; /* Ensure consistent size */
+    min-width: 80px;
+}
+
+
+.Posts_display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 60px; /* Space under the logo */
+}
+
+.Post {
+    width: 90%; /* Responsive size */
+    max-width: 600px; /* Conventional size similar to Facebook/Instagram */
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    word-wrap: break-word; /* Prevent text overflow */
+    overflow: hidden; /* Hide excess content */
+}
+
+.Post img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.profile-img {
+    width: 120px; /* Match logo size */
+    height: auto;
+    border-radius: 50%;
 }
 
 .Posts_display {
@@ -17,23 +54,27 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    padding: 10px;
 }
 
-.Post {
-    width: 80%; /* Limit post width */
+.Profile_info {
+    position: fixed;
+    top: 20px;
+    right: 20px; /* Place it in the top-right corner */
     background-color: white;
-    padding: 15px;
+    padding: 10px;
     border-radius: 8px;
+    width: 200px; /* Smaller size */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.profile-img {
-    width: 250px; /* Match the logo size */
+.Profile_info img {
+    max-width: 100%;
     height: auto;
-    border-radius: 50%; /* Optional for circular profile images */
+    border-radius: 50%; /* Optional circular image */
 }
 
-.like-button {
+/* .like-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,4 +102,40 @@
 
 .like-button:hover svg {
     transform: scale(3) translate(50%);
-}
+} */
+
+.like-button-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+  }
+  
+  .like-button-container:hover {
+    transform: scale(1.1);
+  }
+  
+  .like-button-container:active {
+    transform: scale(0.95);
+  }
+  
+  .like-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
+  
+  .like-count {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  /* Remove the old like button styles */
+  .like-button {
+    display: none;
+  }
