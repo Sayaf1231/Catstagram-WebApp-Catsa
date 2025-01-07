@@ -1,0 +1,64 @@
+.Feed {
+    padding: 20px;
+    background-color: #eed4b2;
+    text-align: center;
+}
+
+.logo {
+    position: fixed; /* Sticks the logo to the top-left corner */
+    top: 20px;
+    left: 20px;
+    width: 250px; /* Adjust size */
+    height: auto;
+}
+
+.Posts_display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.Post {
+    width: 80%; /* Limit post width */
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.profile-img {
+    width: 250px; /* Match the logo size */
+    height: auto;
+    border-radius: 50%; /* Optional for circular profile images */
+}
+
+.like-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 10px;
+    color: white;
+    text-shadow: 2px 2px rgb(116, 116, 116);
+    text-transform: uppercase;
+    cursor: pointer;
+    border: solid 2px black;
+    letter-spacing: 1px;
+    font-weight: 600;
+    font-size: 17px;
+    background-color: hsl(49deg 98% 60%);
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.like-button:active {
+    transform: scale(0.9);
+    transition: all 100ms ease;
+}
+
+.like-button:hover svg {
+    transform: scale(3) translate(50%);
+}

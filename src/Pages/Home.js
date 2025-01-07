@@ -4,6 +4,8 @@ import { v4 } from "uuid";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import "../styling/Home.css"
+
 
 function Home() {
   const [Txt, setTxt] = useState("");   // For text input
@@ -38,7 +40,7 @@ function Home() {
     if (imgUploadComplete && Txt.trim() !== "") {  // Check if image is uploaded and name is provided 
       try {                                        //the Txt.trim js kinda makes sure if there is a text after getting rid of whitespace
         const email = localStorage.getItem("email");
-        const docRef = collection(Namedb, "ProfileData");
+        const docRef = collection(Namedb, "ProfileData"); //the user profile name, profile pic and the email is stored in firebase database
         await addDoc(docRef, {
           txtval: Txt,      // Save text input
           imgUrl: img,      // Save image URL from Firebase Storage
@@ -56,47 +58,60 @@ function Home() {
 
   // Logout handler
   const handleLogout = () => {
-    localStorage.clear();
+    localStorage.clear();   //clear user local storage info and go back to Signin
     navigate("/SignIn");
   };
 
   return (
-    <div>
-      <h1>This is a placeholder Homepage for Catsa!!!!</h1>
-      <section className="upload">
+    <div className="home-container">
+            {/*logo*/}
+            <img src={require("../styling/Logo.png")} alt="Logo" className="logo" />
 
-        <input 
-          className="ProfileName" 
-          placeholder="Enter Name" 
-          onChange={(e) => setTxt(e.target.value)}   //js sets setTxt to the entered text
-          value={Txt}
-        />
-        <br/><br/>
-        
-        <input 
-          className="ProfilePic" 
-          type="file" 
-          onChange={handleimgUpload} 
-          disabled={loading}                        // Disable file input when loading
-        />
-        <br/><br/>
-        
-        <button 
-          className="profileAdd" 
-          onClick={handleinput}
-          disabled={!imgUploadComplete || Txt.trim() === "" || loading}      // Disable until ready
-        >
-          {loading ? "Uploading..." : "Done!"} {/* Show loading state */}
-        </button>
-        <br/>
-      </section>
-      
-      <button 
-        className="Logoutbut" 
-        onClick={handleLogout}>
-        Logout
-      </button>
-    </div>
+            {/* Form box */}
+            <div className="form">
+                <h1 className="title">
+                    Welcome to Catsa
+                </h1>
+
+                {/* Name Input */}
+                <input
+                    className="ProfileName"
+                    placeholder="Enter Name"
+                    onChange={(e) => setTxt(e.target.value)}
+                    value={Txt}
+                />
+
+                {/* File Upload */}
+                <label className="custum-file-upload">
+                    <div className="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2L16.5 6.5L15.08 7.92L13 5.83V13H11V5.83L8.92 7.92L7.5 6.5L12 2M5 18V21H19V18H5Z" />
+                        </svg>
+                    </div>
+                    <div className="text">
+                        <span>{loading ? "Uploading..." : "Upload profile Photo"}</span>
+                    </div>
+                    <input type="file" onChange={handleimgUpload} disabled={loading} />
+                </label>
+
+                {/* Upload Complete Message */}
+                {imgUploadComplete && <p className="upload-complete">Upload Complete!</p>}
+
+                {/* Upload Button */}
+                <button
+                    className="profileAdd"
+                    onClick={handleinput}
+                    disabled={!imgUploadComplete || Txt.trim() === "" || loading}
+                >
+                    {loading ? "Uploading..." : "Done!"}
+                </button>
+
+                {/* Logout Button */}
+                <button className="LogoutbutHome" onClick={handleLogout}>
+                    Back
+                </button>
+            </div>
+        </div>
   );
 }
 
