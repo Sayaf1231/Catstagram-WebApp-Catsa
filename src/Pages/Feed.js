@@ -15,6 +15,7 @@ function Feed() {
   const [loading, setLoading] = useState(false);        //Loading info; so it doenst crash and data flow isnt damaged
   const [imgUploadComplete, setImgUploadComplete] = useState(false);    //img upload status
   const [likeobject, setLikeobject] = useState({});     //Like status info object 
+  const [emailToProfileMap, setEmailToProfileMap] = useState({});   //to set username when post
 
   // Post image upload func
   const handlePostImgUpload = (e) => {
@@ -81,13 +82,22 @@ function Feed() {
   // Fetch profile data
   const fetchProfileData = async () => {
     try {
+      const currentuser = localStorage.getItem("email");        //current user 
       const profileRef = collection(Namedb, "ProfileData");     //get the data from the ProfileData database
       const profileSnapshot = await getDocs(profileRef);        //get the docs
       const profileList = profileSnapshot.docs.map(doc => ({    //make the data objects
         id: doc.id,
         ...doc.data()
       }));
-      setPData(profileList);                                    //set it
+      const currentUserProfile = profileList.find(profile => profile.u_email === currentuser);
+      setPData(currentUserProfile ? [currentUserProfile] : []);
+
+      const profileNameLinking = {}
+      profileSnapshot.forEach((doc) => {
+        const data = doc.data();
+        profileNameLinking[data.u_email] = data.txtval
+      }); // Set the email-to-profile mapping
+      setEmailToProfileMap(profileNameLinking);
     } catch (error) {
       console.error("Error fetching profile data:", error);
     }
@@ -209,32 +219,35 @@ function Feed() {
       </div>
 
       {/* Load any post from users */}
-      <div className="Posts_display">
+      <div className="posts-container">
+      {/* <img src={require("../styling/Paws.jpeg")} alt="paws" className="Pawbackground" /> */}
         <h2>Recent Posts</h2>
-        {postData.map(post => (
-          <div key={post.id} className="Post">
-            {post.posttxtval && <p>{post.posttxtval}</p>}
-            {post.postimgVal && <img src={post.postimgVal} alt="Post" />}
-            <p>Posted by: {post.u_email}</p>
-            
-            <button 
-              className="like-button-container"
-              onClick={() => handleLike(post.id)}
-              aria-label={likeobject[post.id] ? "Unlike post" : "Like post"}
-            >
-              <img
-                src={likeobject[post.id] ? require("../styling/Like.png") : require("../styling/noLike.png")}
-                alt={likeobject[post.id] ? "Liked" : "Like"}
-                className="like-icon"
-              />
-              <span className="like-count">{post.likes || 0}</span>
-            </button>
-          </div>
-        ))}
+        <div className="Posts_display">
+          {postData.map(post => (
+            <div key={post.id} className="Post">
+              {post.posttxtval && <p>{post.posttxtval}</p>}
+              {post.postimgVal && <img src={post.postimgVal} alt="Post" />}
+              <p>Posted by: {emailToProfileMap[post.u_email] || "Unknown User"}
+              </p>
+              
+              <button 
+                className="like-button-container"
+                onClick={() => handleLike(post.id)}
+              >
+                <img
+                  src={likeobject[post.id] ? require("../styling/Like.png") : require("../styling/noLike.png")}
+                  alt={likeobject[post.id] ? "Liked" : "Like"}
+                  className="like-icon"
+                />
+                <span className="like-count">{likeobject[post.id] ? 1 : 0}</span>
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="Profile_info">
-        <h2>Profile Information</h2>
+        {/* <h2>Profile Information</h2> */}
         {pdata.map(profile => (
           <div key={profile.id}>
             <p>Profile Name: {profile.txtval}</p>
