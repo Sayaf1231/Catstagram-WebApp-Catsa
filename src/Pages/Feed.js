@@ -5,6 +5,11 @@ import { addDoc, collection, getDocs, query, where, deleteDoc, doc} from "fireba
 import { useNavigate } from "react-router-dom";
 import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
 import "../styling/Feed.css"
+//tensor flow
+require('@tensorflow/tfjs-backend-cpu');
+require('@tensorflow/tfjs-backend-webgl');
+
+const cocoSsd = require('@tensorflow-models/coco-ssd');
 
 function Feed() {
   const navigate = useNavigate();
@@ -17,24 +22,69 @@ function Feed() {
   const [likeobject, setLikeobject] = useState({});     //Like status info object 
   const [emailToProfileMap, setEmailToProfileMap] = useState({});   //to set username when post
 
-  // Post image upload func
-  const handlePostImgUpload = (e) => {
-    const file = e.target.files[0];                       //get the 1st doc
-    setLoading(true);
-    const postImgRef = ref(Imgdb, `PostImgFile/${v4()}`);     //ref wher ethe data will be stored in (v4 generates a unique id)
+  //tensor flow
+  const [model, setmodel] = useState(null);
+  const [DetectedObjects, setDetectedObjects] = useState([]);
 
-    uploadBytes(postImgRef, file)                             //upload the image
-      .then(snapshot => getDownloadURL(snapshot.ref))         //get the downloadable url for the image
-      .then(url => {
-        setPostImg(url);
-        setImgUploadComplete(true);
-        setLoading(false);
-        console.log("Post Image uploaded at:", url);
+  // Post image upload func
+  const handlePostImgUpload = async (e) => {
+    const imagefile = e.target.files[0];                       //get the image
+    setLoading(true);
+    
+    //url so can call image object
+    try{
+      const imgUrl = URL.createObjectURL(imagefile);
+      const image = new Image();
+      image.src = imgUrl;
+  
+      await new Promise((resolve) => {
+        image.onload = resolve
       })
-      .catch(error => {
-        console.error("Error uploading post image:", error);
+
+      if (!model){
+        alert("Model not loaded yet. Please try again later.");
+        return;
+      }
+
+      //get the model prediction
+      const predictions = await model.detect(image);
+      setDetectedObjects(predictions);
+      console.log("Detected objects:", predictions); 
+      
+      //see if the model detects it as cat and has a score of more than 50%
+      const DetectCat = predictions.some(
+        (predictions) =>
+          predictions.class === "cat" && predictions.score > .5 
+      );
+
+      //if it is cat then
+      if (DetectCat){
+        const postImgRef = ref(Imgdb, `PostImgFile/${v4()}`);     //ref wher ethe data will be stored in (v4 generates a unique id)
+
+        uploadBytes(postImgRef, imagefile)                             //upload the image
+          .then(snapshot => getDownloadURL(snapshot.ref))         //get the downloadable url for the image
+          .then(url => {
+            setPostImg(url);
+            setImgUploadComplete(true);
+            setLoading(false);
+            console.log("Post Image uploaded at:", url);
+          })
+          .catch(error => {
+            console.error("Error uploading post image:", error);
+            setLoading(false);
+          });
+        }
+        else{
+          alert("Not A Cat photo. WOMP WOMP");
+          setLoading(false);
+        }
+
+        URL.revokeObjectURL(imgUrl);
+      }
+      catch (error){
+        console.log("error processing img", error);
         setLoading(false);
-      });
+      }
   };
 
   // Handle post creation
@@ -179,8 +229,20 @@ function Feed() {
     if (userEmail) {                                        //if the email user exist then get likes associated with user
       fetchUserLikes(userEmail);
     }
+
+    const loadModelfunc = async () => {
+      try {
+        const loadmodel = await cocoSsd.load();
+        setmodel(loadmodel);
+        console.log("model loaded")
+      } catch(error){
+        console.error("error loading model", error);
+      }
+    };
+
     fetchProfileData();                                     //get all the profile data
     fetchPosts();                                           //get the post
+    loadModelfunc();                                        //load the tensorflow model
   }, []);
 
   return (
