@@ -1,0 +1,23 @@
+In React, mounting is the process that occurs when a component is first rendered into the DOM (i.e., added to the webpage). 
+This is the very first time the component appears on the screen, and it's when React creates and inserts the component into the DOM.
+
+
+React components go through several phases during their lifecycle:
+
+Mounting: When the component is created and inserted into the DOM.
+At this point, the component is "mounted" and becomes visible in the app.
+Updating: When the component re-renders due to state or props changes.
+Unmounting: When the component is removed from the DOM.
+
+The useEffect hook is often used to run code during the mounting phase (i.e., when the component first renders)
+[]; Empty array ensures this only runs once on mount
+
+... -> is the spread operator; this makes it so object can be copied while maintaining mutability
+in our case it is helpful because we want to only change one pair and copy the rest;
+
+For likes we are gonna use event delegation by using event bubbling; which is something like 
+attach to a parent container and use event bubling to detec clicks on like
+
+
+The ...doc.data() part expands all the data fields from the original document (doc.data()) into the new object. 
+This creates a new object with the document ID and all its data fields.

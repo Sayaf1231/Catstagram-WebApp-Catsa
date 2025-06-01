@@ -1,0 +1,6 @@
+node_modules/
+.env
+.codegpt
+.DS_Store
+.vscode/
+.env

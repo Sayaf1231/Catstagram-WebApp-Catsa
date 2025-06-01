@@ -1,0 +1,146 @@
+.Feed {
+    padding: 20px;
+    text-align: center;
+    overflow-y: auto;
+    height: 100vh;
+    position: relative;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.Feed::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.logo {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: auto;
+    max-width: 100px;
+    min-width: 80px;
+}
+
+/* Profile Info Styling */
+.Profile_info {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 60px; /* Smaller profile info */
+    height: 60px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.Profile_info img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.Profile_info:hover {
+    width: 200px; /* Expand on hover */
+    height: auto;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.Profile_info:hover p {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.Profile_info p {
+    display: none;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Post Section Styling */
+.posts-container {
+    background: url('../styling/Paws.jpeg') center/cover no-repeat;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px auto;
+    width: 95%;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Post {
+    width: 90%;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    word-wrap: break-word;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.Post_info {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #eed4b2; /* Beige background for the post form */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.Post img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* "Posted by" Styling */
+.posted-by {
+    font-size: 12px;
+    color: #555;
+    margin-top: 8px;
+}
+
+/* Like Button Styling */
+.like-button-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+}
+
+.like-button-container:hover {
+    transform: scale(1.1);
+}
+
+.like-button-container:active {
+    transform: scale(0.95);
+}
+
+.like-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.like-count {
+    font-size: 14px;
+    color: #666;
+}

@@ -1,0 +1,165 @@
+@font-face {
+    font-family: 'Comica Boom';
+    src: url('../styling/Comica\ Boom.otf') format('opentype');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comica Boom', sans-serif;
+    background-color: #77a1a5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.home-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    position: fixed; /* Sticks the logo to the top-left corner */
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: auto;
+    max-width: 100px; /* Ensure consistent size */
+    min-width: 80px;
+}
+
+
+.form {
+    padding: 20px;
+    background: #eed4b2; /* Matches the form styling from SignIn */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 6px;
+    border: 2px solid black;
+    box-shadow: 4px 4px black;
+    width: 300px;
+    text-align: center;
+}
+
+.title {
+    color: black;
+    font-weight: 900;
+    font-size: 40px;
+    margin-bottom: 25px;
+}
+
+.title span {
+    color: #666;
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.ProfileName{
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid black;
+    background-color: beige;
+    box-shadow: 4px 4px black;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 5px 10px;
+    outline: none;
+}
+
+.ProfileName::placeholder {
+    color: #666;
+    opacity: 0.8;
+}
+
+.custum-file-upload {
+    height: 80px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    border: 2px dashed #e8e8e8;
+    background-color: #a47f4f;
+    padding: 0.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 48px 35px -48px #e8e8e8;
+}
+
+.custum-file-upload .icon svg {
+    height: 40px;
+    fill: black;
+}
+
+.custum-file-upload .text span {
+    font-weight: 400;
+    color: black;
+}
+
+.custum-file-upload input {
+    display: none;
+}
+
+.upload-complete {
+    font-size: 16px;
+    font-weight: bold;
+    color: #1b664d;
+    margin: 10px 0;
+}
+
+
+.profileAdd {
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 4px 4px black;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profileAdd:hover {
+    background-color: #888766;
+    color: white;
+}
+
+.profileAdd:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.LogoutbutHome {
+    background-color: #e43f3f;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 4px 4px black;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.LogoutbutHome:hover {
+    background-color: #b22222;
+}
+
+.LogoutbutHome:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0px 0px black;
+}
